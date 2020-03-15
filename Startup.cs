@@ -1,17 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using WeatherDB.Models;
+using WeatherDB.Services;
 
-namespace ApiDB
+namespace WeatherDB
 {
     public class Startup
     {
@@ -25,18 +22,35 @@ namespace ApiDB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.Configure<WeatherDatabaseSettings>(
+                Configuration.GetSection(nameof(WeatherDatabaseSettings)));
+
+            services.AddSingleton<IWeatherDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<WeatherDatabaseSettings>>().Value);
+
+            services.AddSingleton<WeatherService>();
+
+            services.AddControllers()
+                .AddNewtonsoftJson(options => options.UseMemberCasing());
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Weather Api DB Test", Version = "v1" });
+            });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        ///<summary>
+        ///This method gets called by the runtime.Use this method to configure the HTTP request pipeline.
+        ///</summary>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            EnableMiddlewareGenerateToSwaggerAsJsonEndpoint(app);
+            EnableMiddlewareToSwaggerUISpecifyingJsonEndpoint(app);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -45,6 +59,19 @@ namespace ApiDB
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+        }
+
+        private static void EnableMiddlewareGenerateToSwaggerAsJsonEndpoint(IApplicationBuilder app)
+        {
+            app.UseSwagger();
+        }
+
+        private static void EnableMiddlewareToSwaggerUISpecifyingJsonEndpoint(IApplicationBuilder app)
+        {
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
         }
     }
