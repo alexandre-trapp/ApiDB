@@ -3,7 +3,7 @@ using RestSharp;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
-using WeatherDB.Models;
+using ApiDB.Models;
 
 namespace WeatherDB.Services
 {
@@ -16,12 +16,12 @@ namespace WeatherDB.Services
             _restClient = restClient ?? throw new ArgumentNullException(nameof(restClient));
         }
 
-        public async Task<WeathersList> ConsumeWeatherApiService(string[] cities)
+        public async Task<RootObject> ConsumeWeatherApiService(string[] cities)
         {
             if (!ValidRequest(cities))
                 return RequesIsNotValid();
 
-            var weathersList = new WeathersList();
+            var retorno = new RootObject();
 
             var sbLog = new StringBuilder();
 
@@ -42,17 +42,17 @@ namespace WeatherDB.Services
                 if (string.IsNullOrEmpty(resp.Content) || resp.Content == null)
                     sbLog.AppendLine($"Content is empty - statusCode: {resp.StatusCode}, message: {resp.ErrorMessage}; Request idCity: {city}");
                 else
-                    weathersList = JsonConvert.DeserializeObject<WeathersList>(resp.Content);
+                    retorno = JsonConvert.DeserializeObject<RootObject>(resp.Content);
             }
 
-            SetHesponseHeadersCustom(weathersList, sbLog);
-            return weathersList;
+            SetHesponseHeadersCustom(retorno, sbLog);
+            return retorno;
         }
 
-        private static void SetHesponseHeadersCustom(WeathersList responseList, StringBuilder sbLog)
+        private static void SetHesponseHeadersCustom(RootObject retorno, StringBuilder sbLog)
         {
             bool logIsNull = string.IsNullOrEmpty(sbLog.ToString());
-            responseList.MessageResponse = (logIsNull ? "Success" : sbLog.ToString());
+            retorno.messageResponse = (logIsNull ? "Success" : sbLog.ToString());
         }
 
         private bool ValidRequest(string[] cities)
@@ -60,11 +60,11 @@ namespace WeatherDB.Services
             return cities != null && cities.Length > 0;
         }
 
-        private WeathersList RequesIsNotValid()
+        private RootObject RequesIsNotValid()
         {
-            return new WeathersList
+            return new RootObject
             {
-                MessageResponse = "não informado cidades válidas no request"
+                messageResponse = "não informado cidades válidas no request"
             };
         }
     }

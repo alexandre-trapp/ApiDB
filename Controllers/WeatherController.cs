@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using ApiDB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using RestSharp;
-using WeatherDB.Models;
 using WeatherDB.Services;
 
 namespace WeatherDB.Controllers
@@ -38,7 +39,7 @@ namespace WeatherDB.Controllers
         } 
 
         [HttpGet("{cityCode:length(24)}")]
-        public IActionResult Get([FromRoute] string cityCode)
+        public IActionResult Get([FromRoute] int cityCode)
         {
             var api = _apiService.GetWeathersCity(cityCode);
 
@@ -57,7 +58,7 @@ namespace WeatherDB.Controllers
             var _apiWeather = new ConnectWeatherApiService(new RestClient());
             var response = await _apiWeather.ConsumeWeatherApiService(new string[1] { city });
 
-            return ProcessWeathersList(response);
+            return await ProcessWeathersList(response);
         }
 
         [HttpPost]
@@ -68,18 +69,18 @@ namespace WeatherDB.Controllers
             var _apiService = new ConnectWeatherApiService(new RestClient());
 
             var response = await _apiService.ConsumeWeatherApiService(citiesArr);
-            return ProcessWeathersList(response);
+            return await ProcessWeathersList(response);
         }
 
-        private IActionResult ProcessWeathersList(WeathersList response)
+        private async Task<IActionResult> ProcessWeathersList(RootObject response)
         {
-            if (response == null || response.List == null)
+            if (response == null || response.weathersList == null || !response.weathersList.Any())
                 return NotFound(JsonConvert.SerializeObject(response));
 
-            if ("Success".Equals(response.MessageResponse))
+            if ("Success".Equals(response.messageResponse))
             {
-                _apiService.Create(response);
-                response.MessageResponse += $"weathers created in db from weathers returned from api";
+                await _apiService.CreateMany(response.weathersList);
+                response.messageResponse += $"weathers created in db from weathers returned from api";
 
                 return Ok(JsonConvert.SerializeObject(response));
             }

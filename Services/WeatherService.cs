@@ -2,6 +2,7 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using WeatherDB.Models;
+using System.Threading.Tasks;
 
 namespace WeatherDB.Services
 {
@@ -20,8 +21,8 @@ namespace WeatherDB.Services
         public List<WeathersList> Get() =>
             WeathersColl.Find(x => true).ToList();
 
-        public List<WeathersList> GetWeathersCity(string cityCode) =>
-            WeathersColl.Find<WeathersList>(apiTest => apiTest.City.id == cityCode).ToList();
+        public List<WeathersList> GetWeathersCity(int cityCode) =>
+            WeathersColl.Find<WeathersList>(apiTest => apiTest.city.id == cityCode).ToList();
 
         public WeathersList Create(WeathersList apiTest)
         {
@@ -37,5 +38,11 @@ namespace WeatherDB.Services
 
         public void Remove(string id) =>
             WeathersColl.DeleteOne(apiTest => apiTest._Id == id);
+
+        public async Task<List<WeathersList>> CreateMany(List<WeathersList> apiTest)
+        {
+            await WeathersColl.InsertManyAsync(apiTest);
+            return apiTest;
+        }
     }
 }
