@@ -8,7 +8,7 @@ namespace ApiDB.Models
     {
         public List<WeathersList> weathersList { get; set; }
 
-        [JsonProperty("id ")]
+        [JsonProperty("messageResponse")]
         public string messageResponse { get; set; }
     }
 }

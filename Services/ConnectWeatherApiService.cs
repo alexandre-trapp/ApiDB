@@ -42,7 +42,11 @@ namespace WeatherDB.Services
                 if (string.IsNullOrEmpty(resp.Content) || resp.Content == null)
                     sbLog.AppendLine($"Content is empty - statusCode: {resp.StatusCode}, message: {resp.ErrorMessage}; Request idCity: {city}");
                 else
-                    retorno = JsonConvert.DeserializeObject<RootObject>(resp.Content);
+                {
+                    var jsonResult = JsonConvert.DeserializeObject(resp.Content).ToString();
+                    retorno = JsonConvert.DeserializeObject<RootObject>(jsonResult);
+                }
+                    
             }
 
             SetHesponseHeadersCustom(retorno, sbLog);

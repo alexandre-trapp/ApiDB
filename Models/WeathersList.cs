@@ -32,7 +32,6 @@ namespace WeatherDB.Models
         public List<Lista> lista { get; set; }
 
         [BsonElement("city")]
-        [JsonProperty("city")]
         public City city { get; set; }
     }
 
@@ -88,7 +87,6 @@ namespace WeatherDB.Models
         public string icon { get; set; }
     }
 
-    [JsonObject("wind")]
     public class Wind
     {
         [BsonElement("speed")]
@@ -100,104 +98,100 @@ namespace WeatherDB.Models
         public int deg { get; set; }
     }
 
-    [JsonObject("sys")]
     public class Sys
     {
-        [BsonElement("pod ")]
-        [JsonProperty("pod ")]
+        [BsonElement("pod")]
+        [JsonProperty("pod")]
         public string pod { get; set; }
     }
 
-    [JsonObject("main")]
     public class Main
     {
-        [BsonElement("temp ")]
-        [JsonProperty("temp ")]
+        [BsonElement("temp")]
+        [JsonProperty("temp")]
         public double temp { get; set; }
 
-        [BsonElement("feels_like ")]
-        [JsonProperty("feels_like ")]
+        [BsonElement("feels_like")]
+        [JsonProperty("feels_like")]
         public double feels_like { get; set; }
 
-        [BsonElement("temp_min ")]
-        [JsonProperty("temp_min ")]
+        [BsonElement("temp_min")]
+        [JsonProperty("temp_min")]
         public double temp_min { get; set; }
 
-        [BsonElement("temp_max ")]
-        [JsonProperty("temp_max ")]
+        [BsonElement("temp_max")]
+        [JsonProperty("temp_max")]
         public double temp_max { get; set; }
 
-        [BsonElement("pressure ")]
-        [JsonProperty("pressure ")]
+        [BsonElement("pressure")]
+        [JsonProperty("pressure")]
         public int pressure { get; set; }
 
-        [BsonElement("sea_level ")]
-        [JsonProperty("sea_level ")]
+        [BsonElement("sea_level")]
+        [JsonProperty("sea_level")]
         public int sea_level { get; set; }
 
-        [BsonElement("grnd_level ")]
-        [JsonProperty("grnd_level ")]
+        [BsonElement("grnd_level")]
+        [JsonProperty("grnd_level")]
         public int grnd_level { get; set; }
 
-        [BsonElement("humidity ")]
-        [JsonProperty("humidity ")]
+        [BsonElement("humidity")]
+        [JsonProperty("humidity")]
         public int humidity { get; set; }
 
-        [BsonElement("temp_kf ")]
-        [JsonProperty("temp_kf ")]
+        [BsonElement("temp_kf")]
+        [JsonProperty("temp_kf")]
         public double temp_kf { get; set; }
     }
 
-    [JsonObject("clouds")]
     public class Clouds
     {
-        [BsonElement("all ")]
-        [JsonProperty("all ")]
+        [BsonElement("all")]
+        [JsonProperty("all")]
         public int all { get; set; }
     }
 
-    [JsonObject("coord")]
-    public class Coord
+    [JsonObject("Coord")]
+    public class Coordenates
     {
-        [BsonElement("lat ")]
-        [JsonProperty("lat ")]
+        [BsonElement("lat")]
+        [JsonProperty("lat")]
         public double lat { get; set; }
 
-        [BsonElement("lon ")]
-        [JsonProperty("lon ")]
+        [BsonElement("lon")]
+        [JsonProperty("lon")]
         public double lon { get; set; }
     }
 
     [JsonObject("city")]
     public class City
     {
-        [BsonElement("id ")]
-        [JsonProperty("id ")]
+        [BsonElement("id")]
+        [JsonProperty("id")]
         public int id { get; set; }
 
-        [BsonElement("name ")]
-        [JsonProperty("name ")]
+        [BsonElement("name")]
+        [JsonProperty("name")]
         public string name { get; set; }
 
-        [BsonElement("country ")]
-        [JsonProperty("country ")]
+        [BsonElement("country")]
+        [JsonProperty("country")]
         public string country { get; set; }
 
-        [BsonElement("timezone ")]
-        [JsonProperty("timezone ")]
+        [BsonElement("timezone")]
+        [JsonProperty("timezone")]
         public int timezone { get; set; }
 
-        [BsonElement("sunrise ")]
-        [JsonProperty("sunrise ")]
+        [BsonElement("sunrise")]
+        [JsonProperty("sunrise")]
         public int sunrise { get; set; }
 
-        [BsonElement("sunset ")]
-        [JsonProperty("sunset ")]
+        [BsonElement("sunset")]
+        [JsonProperty("sunset")]
         public int sunset { get; set; }
 
-        [BsonElement("Coord ")]
-        [JsonProperty("Coord ")]
-        public Coord Coord { get; set; }
+        [BsonElement("Coord")]
+        public Coordenates Coord { get; set; }
     }
 
     internal static class Converter
