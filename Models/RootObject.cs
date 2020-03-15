@@ -6,7 +6,6 @@ namespace ApiDB.Models
 {
     public class RootObject
     {
-        [JsonProperty("weathersList ")]
         public List<WeathersList> weathersList { get; set; }
 
         [JsonProperty("id ")]

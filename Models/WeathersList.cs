@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace WeatherDB.Models
 {
+    [JsonObject("weathersList")]
     public class WeathersList
     {
         [BsonId]
@@ -28,14 +29,15 @@ namespace WeatherDB.Models
 
         [BsonElement("list")]
         [JsonProperty("list")]
-        public List<List> list { get; set; }
+        public List<Lista> lista { get; set; }
 
         [BsonElement("city")]
         [JsonProperty("city")]
         public City city { get; set; }
     }
 
-    public class List
+    [JsonObject("list")]
+    public class Lista
     {
         [BsonElement("dt")]
         [JsonProperty("dt")]
@@ -66,6 +68,7 @@ namespace WeatherDB.Models
         public Clouds clouds { get; set; }
     }
 
+    [JsonObject("weather")]
     public class Weather
     {
         [BsonElement("id")]
@@ -85,6 +88,7 @@ namespace WeatherDB.Models
         public string icon { get; set; }
     }
 
+    [JsonObject("wind")]
     public class Wind
     {
         [BsonElement("speed")]
@@ -96,6 +100,7 @@ namespace WeatherDB.Models
         public int deg { get; set; }
     }
 
+    [JsonObject("sys")]
     public class Sys
     {
         [BsonElement("pod ")]
@@ -103,6 +108,7 @@ namespace WeatherDB.Models
         public string pod { get; set; }
     }
 
+    [JsonObject("main")]
     public class Main
     {
         [BsonElement("temp ")]
@@ -142,6 +148,7 @@ namespace WeatherDB.Models
         public double temp_kf { get; set; }
     }
 
+    [JsonObject("clouds")]
     public class Clouds
     {
         [BsonElement("all ")]
@@ -149,6 +156,7 @@ namespace WeatherDB.Models
         public int all { get; set; }
     }
 
+    [JsonObject("coord")]
     public class Coord
     {
         [BsonElement("lat ")]
@@ -160,6 +168,7 @@ namespace WeatherDB.Models
         public double lon { get; set; }
     }
 
+    [JsonObject("city")]
     public class City
     {
         [BsonElement("id ")]
