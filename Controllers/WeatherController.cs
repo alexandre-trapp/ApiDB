@@ -79,7 +79,7 @@ namespace WeatherDB.Controllers
 
             if ("Success".Equals(response.messageResponse))
             {
-                await _apiService.CreateMany(response.weathersList);
+                _apiService.CreateMany(response.weathersList);
                 response.messageResponse += $"weathers created in db from weathers returned from api";
 
                 return Ok(JsonConvert.SerializeObject(response));

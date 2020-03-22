@@ -42,6 +42,9 @@ namespace WeatherDB.Models
         [JsonProperty("dt")]
         public int dt { get; set; }
 
+        [BsonElement("id_weatherlist")]
+        public string id_weatherlist { get; set; }
+
         [BsonElement("wind")]
         [JsonProperty("wind")]
         public Wind wind { get; set; }
@@ -74,6 +77,9 @@ namespace WeatherDB.Models
         [JsonProperty("id")]
         public int id { get; set; }
 
+        [BsonElement("id_list")]
+        public string id_list { get; set; }
+
         [BsonElement("main")]
         [JsonProperty("main")]
         public string main { get; set; }
@@ -96,6 +102,9 @@ namespace WeatherDB.Models
         [BsonElement("deg")]
         [JsonProperty("deg")]
         public int deg { get; set; }
+
+        [BsonElement("id_list")]
+        public string id_list { get; set; }
     }
 
     public class Sys
@@ -103,10 +112,16 @@ namespace WeatherDB.Models
         [BsonElement("pod")]
         [JsonProperty("pod")]
         public string pod { get; set; }
+
+        [BsonElement("id_list")]
+        public string id_list { get; set; }
     }
 
     public class Main
     {
+        [BsonElement("id_list")]
+        public string id_list { get; set; }
+
         [BsonElement("temp")]
         [JsonProperty("temp")]
         public double temp { get; set; }
@@ -149,18 +164,9 @@ namespace WeatherDB.Models
         [BsonElement("all")]
         [JsonProperty("all")]
         public int all { get; set; }
-    }
 
-    [JsonObject("Coord")]
-    public class Coordenates
-    {
-        [BsonElement("lat")]
-        [JsonProperty("lat")]
-        public double lat { get; set; }
-
-        [BsonElement("lon")]
-        [JsonProperty("lon")]
-        public double lon { get; set; }
+        [BsonElement("id_list")]
+        public string id_list { get; set; }
     }
 
     [JsonObject("city")]
@@ -169,6 +175,9 @@ namespace WeatherDB.Models
         [BsonElement("id")]
         [JsonProperty("id")]
         public int id { get; set; }
+
+        [BsonElement("id_weatherlist")]
+        public string id_weatherlist { get; set; }
 
         [BsonElement("name")]
         [JsonProperty("name")]
@@ -192,6 +201,21 @@ namespace WeatherDB.Models
 
         [BsonElement("Coord")]
         public Coordenates Coord { get; set; }
+    }
+
+    [JsonObject("Coord")]
+    public class Coordenates
+    {
+        [BsonElement("lat")]
+        [JsonProperty("lat")]
+        public double lat { get; set; }
+
+        [BsonElement("lon")]
+        [JsonProperty("lon")]
+        public double lon { get; set; }
+
+        [BsonElement("id_city")]
+        public string id_city { get; set; }
     }
 
     internal static class Converter
